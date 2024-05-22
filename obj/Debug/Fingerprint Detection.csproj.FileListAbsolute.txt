@@ -47,3 +47,4 @@ C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detectio
 C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerpr.E049F05E.Up2Date
 C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detection.exe
 C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detection.pdb
+C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detection_Content.g.cs
