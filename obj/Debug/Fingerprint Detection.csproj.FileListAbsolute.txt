@@ -48,3 +48,6 @@ C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerpr.E049F05E.Up
 C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detection.exe
 C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detection.pdb
 C:\Users\shulh\source\repos\Fingerprint Detection\obj\Debug\Fingerprint Detection_Content.g.cs
+D:\stima 3\Tubes3_BismillahBersinar\obj\Debug\Fingerprint Detection.csproj.AssemblyReference.cache
+D:\stima 3\Tubes3_BismillahBersinar\obj\Debug\Fingerprint Detection.exe
+D:\stima 3\Tubes3_BismillahBersinar\obj\Debug\Fingerprint Detection.pdb

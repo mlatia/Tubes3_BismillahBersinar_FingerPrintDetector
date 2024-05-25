@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FingerPrintDetector"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-     <Window.Background>
+    <Window.Background>
         <ImageBrush ImageSource="assets/background.png"/>
     </Window.Background>
     <Canvas Margin="0,0,0,0">
@@ -16,12 +16,13 @@
                 Width="313" Height="360" Canvas.Left="92" Canvas.Top="159" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Canvas Background="White">
                 <Button Content="Upload Image" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                Foreground="Gray" FontSize="16" Canvas.Left="92" Canvas.Top="163"
-                />
+                        Foreground="Gray" FontSize="16" Canvas.Left="92" Canvas.Top="163"
+                        Click="UploadImageButton_Click"/>
     
                 <Image Name="UploadedImage" 
-               Width="200" Height="352" Canvas.Left="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button x:Name="RefreshButton" Content="Refresh"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="75"/>
+                       Width="200" Height="352" Canvas.Left="48" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Button x:Name="RefreshButton" Content="Refresh"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="75"
+                        Click="RefreshButton_Click"/>
             </Canvas>
         </Border>
          <Border BorderThickness="0" Background="Transparent"
@@ -56,27 +57,28 @@
                     <TextBlock x:Name="PekerjaanText" Width="150" Canvas.Left="110" Canvas.Top="250" Background="Transparent"/>
                     <TextBlock Text="Kewarganegaraan:" Width="100" Canvas.Left="10" Canvas.Top="280"/>
                     <TextBlock x:Name="KewarganegaraanText" Width="150" Canvas.Left="110" Canvas.Top="280" Background="Transparent"/>
-                </Canvas>
-            </ScrollViewer>
-        </Border>
-        <Label Content="Pilih Algoritma" Canvas.Left="323" Canvas.Top="603" RenderTransformOrigin="-2.789,-1.347" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#ead9bd" BorderBrush="Black" />
-        <ComboBox x:Name="AlgorithmComboBox" Background="#333a6e" BorderBrush="White" Width="100" Height="43" 
-          Canvas.Left="495" Canvas.Top="603"  FontSize="20" RenderTransformOrigin="0.5,0.601" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <ComboBoxItem Content="BM"  FontSize="20" />
-            <ComboBoxItem Content="KMP" FontSize="20"/>
-        </ComboBox>
-        <Button Content="Search" Width="200" Height="58" Canvas.Left="345" Canvas.Top="695"
-            HorizontalAlignment="Left" VerticalAlignment="Top" Background="#333a6e" FontSize="20" Foreground="White" BorderBrush="White"/>
-        <TextBlock x:Name="SearchTimeText" Text="Waktu Pencarian: xxx ms" Canvas.Left="1206" Canvas.Top="666" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock x:Name="MatchPercentageText" Text="Persentase Kecocokkan: xx%" Canvas.Left="1206" Canvas.Top="687" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Border BorderBrush="Gray" BorderThickness="0" Background="#E0E0E0"
-            Width="313" Height="360" Canvas.Left="485" Canvas.Top="159" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Canvas Background="White">
-                <TextBlock Text="Sidik Jari Cocok" HorizontalAlignment="Left"
-                    VerticalAlignment="Center" Foreground="Gray" FontSize="16"
-                    Canvas.Left="102" Canvas.Top="163"/>
-            </Canvas>
-        </Border>
-        <Rectangle x:Name="rectangle" Height="396" Canvas.Left="960" Stroke="Black" Canvas.Top="239" Width="395" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Canvas>
+                    </ScrollViewer>
+                    </Border>
+    <Label Content="Pilih Algoritma" Canvas.Left="323" Canvas.Top="603" RenderTransformOrigin="-2.789,-1.347" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#ead9bd" BorderBrush="Black" />
+    <ComboBox x:Name="AlgorithmComboBox" Background="#333a6e" BorderBrush="White" Width="100" Height="43" 
+    Canvas.Left="495" Canvas.Top="603"  FontSize="20" RenderTransformOrigin="0.5,0.601" HorizontalAlignment="Center" VerticalAlignment="Top">
+    <ComboBoxItem Content="BM"  FontSize="20" />
+    <ComboBoxItem Content="KMP" FontSize="20"/>
+    </ComboBox>
+    <Button Content="Search" Width="200" Height="58" Canvas.Left="345" Canvas.Top="695"
+    HorizontalAlignment="Left" VerticalAlignment="Top" Background="#333a6e" FontSize="20" Foreground="White" BorderBrush="White"
+    Click="SearchButton_Click"/>
+    <TextBlock x:Name="SearchTimeText" Text="Waktu Pencarian: xxx ms" Canvas.Left="1206" Canvas.Top="666" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <TextBlock x:Name="MatchPercentageText" Text="Persentase Kecocokkan: xx%" Canvas.Left="1206" Canvas.Top="687" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <Border BorderBrush="Gray" BorderThickness="0" Background="#E0E0E0"
+    Width="313" Height="360" Canvas.Left="485" Canvas.Top="159" HorizontalAlignment="Left" VerticalAlignment="Top">
+    <Canvas Background="White">
+    <TextBlock Text="Sidik Jari Cocok" HorizontalAlignment="Left"
+    VerticalAlignment="Center" Foreground="Gray" FontSize="16"
+    Canvas.Left="102" Canvas.Top="163"/>
     </Canvas>
-</Window>
+    </Border>
+    <Rectangle x:Name="rectangle" Height="396" Canvas.Left="960" Stroke="Black" Canvas.Top="239" Width="395" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Canvas>
+    </Window>
