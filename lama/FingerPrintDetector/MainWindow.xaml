@@ -1,0 +1,66 @@
+﻿<Window x:Class="FingerPrintDetector.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FingerPrintDetector"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="assets/background.png"/>
+    </Window.Background>
+    <Canvas Margin="0,0,0,0">
+        <TextBlock FontSize="20" FontWeight="Bold" Foreground="Green"
+                   Canvas.Left="242" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Border BorderBrush="Gray" BorderThickness="0" Background="#E0E0E0"
+                Width="313" Height="360" Canvas.Left="92" Canvas.Top="159" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Canvas Background="White">
+                <Button Content="Upload Image" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        Foreground="Gray" FontSize="16" Canvas.Left="92" Canvas.Top="20"
+                        Click="UploadImageButton_Click"/>
+                <Image Name="UploadedImage" 
+                       Width="200" Height="200" Canvas.Left="48" Canvas.Top="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="75"
+                        Canvas.Top="270" Click="RefreshButton_Click"/>
+            </Canvas>
+        </Border>
+        <Border BorderThickness="0" Background="Transparent"
+                Width="280" Height="300" Canvas.Left="400" Canvas.Top="50" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Canvas Width="280" Name="FingerprintCanvas">
+                    <TextBlock Text="NIK:" Width="150" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="NIKText" Width="150" Canvas.Left="110" Canvas.Top="10" Background="Transparent"/>
+                    <TextBlock Text="Nama:" Width="150" Canvas.Left="10" Canvas.Top="40"/>
+                    <TextBlock x:Name="NamaText" Width="150" Canvas.Left="110" Canvas.Top="40" Background="Transparent"/>
+                    <TextBlock Text="TTL:" Width="150" Canvas.Left="10" Canvas.Top="70"/>
+                    <TextBlock x:Name="TTLText" Width="150" Canvas.Left="110" Canvas.Top="70" Background="Transparent"/>
+                    <TextBlock Text="Jenis Kelamin:" Width="150" Canvas.Left="10" Canvas.Top="100"/>
+                    <TextBlock x:Name="JenisKelaminText" Width="150" Canvas.Left="110" Canvas.Top="100" Background="Transparent"/>
+                    <TextBlock Text="Golongan Darah:" Width="150" Canvas.Left="10" Canvas.Top="130"/>
+                    <TextBlock x:Name="GolonganDarahText" Width="150" Canvas.Left="110" Canvas.Top="130" Background="Transparent"/>
+                    <TextBlock Text="Alamat:" Width="150" Canvas.Left="10" Canvas.Top="160"/>
+                    <TextBlock x:Name="AlamatText" Width="150" Canvas.Left="110" Canvas.Top="160" Background="Transparent"/>
+                    <TextBlock Text="Agama:" Width="150" Canvas.Left="10" Canvas.Top="190"/>
+                    <TextBlock x:Name="AgamaText" Width="150" Canvas.Left="110" Canvas.Top="190" Background="Transparent"/>
+                    <TextBlock Text="Status Perkawinan:" Width="150" Canvas.Left="10" Canvas.Top="220"/>
+                    <TextBlock x:Name="StatusPerkawinanText" Width="150" Canvas.Left="110" Canvas.Top="220" Background="Transparent"/>
+                    <TextBlock Text="Pekerjaan:" Width="150" Canvas.Left="10" Canvas.Top="250"/>
+                    <TextBlock x:Name="PekerjaanText" Width="150" Canvas.Left="110" Canvas.Top="250" Background="Transparent"/>
+                    <TextBlock Text="Kewarganegaraan:" Width="150" Canvas.Left="10" Canvas.Top="280"/>
+                    <TextBlock x:Name="KewarganegaraanText" Width="150" Canvas.Left="110" Canvas.Top="280" Background="Transparent"/>
+                </Canvas>
+            </ScrollViewer>
+        </Border>
+        <TextBlock Text="Pilih Algoritma" Canvas.Left="323" Canvas.Top="350" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#ead9bd" />
+        <ComboBox x:Name="AlgorithmComboBox" Background="#333a6e" BorderBrush="White" Width="100" Height="30" 
+                  Canvas.Left="450" Canvas.Top="350" FontSize="16">
+            <ComboBoxItem Content="BM" FontSize="16" />
+            <ComboBoxItem Content="KMP" FontSize="16"/>
+        </ComboBox>
+        <Button x:Name="SearchButton" Content="Search" Width="200" Height="40" Canvas.Left="320" Canvas.Top="400"
+                HorizontalAlignment="Left" VerticalAlignment="Top" Background="#333a6e" FontSize="16" Foreground="White" BorderBrush="White"
+                Click="SearchButton_Click"/>
+        <TextBlock x:Name="SearchTimeText" Text="Waktu Pencarian: xxx ms" Canvas.Left="600" Canvas.Top="350" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock x:Name="MatchPercentageText" Text="Persentase Kecocokkan: xx%" Canvas.Left="600" Canvas.Top="370" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    </Canvas>
+</Window>
