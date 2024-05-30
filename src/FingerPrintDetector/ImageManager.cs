@@ -4,10 +4,11 @@ using System.Text;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing; // Untuk menggunakan metode Mutate()
+using System.Collections.Generic;
 
 namespace FingerPrintDetector
 {
-    public static class ImageTranslate
+    public static class ImageManager
     {
         public static string ConvertImageToAscii8Bit(string imagePath)
     {
@@ -53,7 +54,6 @@ namespace FingerPrintDetector
             {
               
                 string asciiArt = ConvertImageToAscii8Bit(imagePath);
-                Console.WriteLine(asciiArt);
 
                 if (asciiArt != null)
                 {
@@ -71,5 +71,34 @@ namespace FingerPrintDetector
                 return null; // Or handle the error as needed
             }
         }
+
+        public static List<string> GetAllImagePaths(string directoryPath)
+        {
+            List<string> imagePaths = new List<string>();
+
+            // Memeriksa apakah direktori ada
+            if (Directory.Exists(directoryPath))
+            {
+                // Mengambil semua file dengan ekstensi gambar dari direktori
+                string[] files = Directory.GetFiles(directoryPath, "*.*", SearchOption.AllDirectories);
+                
+                foreach (string file in files)
+                {
+                    // Memeriksa apakah file memiliki ekstensi gambar yang didukung
+                    string extension = Path.GetExtension(file).ToLower();
+                    if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif" || extension == ".bmp")
+                    {
+                        imagePaths.Add(file);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Direktori '{directoryPath}' tidak ditemukan.");
+            }
+
+            return imagePaths;
+        }
+
     }
 }

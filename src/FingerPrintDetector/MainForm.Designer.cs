@@ -3,6 +3,7 @@
     partial class MainForm
     {
         private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.PictureBox SimilarImagePictureBox;
 
         protected override void Dispose(bool disposing)
         {
@@ -22,6 +23,7 @@
             this.AlgorithmComboBox = new System.Windows.Forms.ComboBox();
             this.SearchTimeText = new System.Windows.Forms.Label();
             this.MatchPercentageText = new System.Windows.Forms.Label();
+            this.SimilarImagePictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.UploadedImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,6 +67,15 @@
             this.UploadedImage.TabIndex = 3;
             this.UploadedImage.TabStop = false;
             // 
+            // SimilarImagePictureBox
+            this.SimilarImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SimilarImagePictureBox.Location = new System.Drawing.Point(410, 30); // Sesuaikan posisi X dan Y
+            this.SimilarImagePictureBox.Name = "SimilarImagePictureBox";
+            this.SimilarImagePictureBox.Size = new System.Drawing.Size(200, 200); // Sesuaikan lebar dan tinggi
+            this.SimilarImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.SimilarImagePictureBox.TabIndex = 7;
+            this.SimilarImagePictureBox.TabStop = false;
+            this.Controls.Add(this.SimilarImagePictureBox);
             // AlgorithmComboBox
             // 
             this.AlgorithmComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;

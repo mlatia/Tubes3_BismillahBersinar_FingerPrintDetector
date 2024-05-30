@@ -55,7 +55,8 @@ public class KMP
 
         foreach (string fingerprint in database)
         {
-            Tuple<int, int> result = KmpSearch(fingerprint, inputFingerprint);
+            string dataFingerprint = ImageManager.ImagetoAscii(fingerprint);
+            Tuple<int, int> result = KmpSearch(dataFingerprint, inputFingerprint);
             int index = result.Item1;
             int distance = result.Item2;
 

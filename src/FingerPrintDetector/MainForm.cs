@@ -41,8 +41,6 @@ namespace FingerPrintDetector
 
                     UploadedImage.Image = Image.FromFile(imagePath);
 
-                    string inputFingerprint = ImageTranslate.ImagetoAscii("assets/input.png");
-                    Console.WriteLine($"Input fingerprint: {inputFingerprint}");
                 }
             }
         }
@@ -59,23 +57,21 @@ namespace FingerPrintDetector
             SearchButton.Enabled = false;
             Console.WriteLine("Search button clicked");
 
-            string inputFingerprint = ImageTranslate.ImagetoAscii("assets/input.BMP");
+            string inputFingerprint = ImageManager.ImagetoAscii("assets/input.BMP");
             Console.WriteLine($"Input fingerprint: {inputFingerprint}");
 
-            List<string> database = new List<string> { inputFingerprint };
+            List<string> database = ImageManager.GetAllImagePaths("test/real");
 
             Console.WriteLine("INI DATABASEEEE");
-             Console.WriteLine(database);
+            Console.WriteLine(database.Count);
 
             await Task.Run(() =>
             {
-            
-
-
+        
                 Tuple<string, int> result = KMP.FindMostSimilarFingerprint(inputFingerprint, database);
                 string mostSimilar = result.Item1;
                 int distance = result.Item2;
-               
+                SimilarImagePictureBox.Image = Image.FromFile(mostSimilar);
             
                 Console.WriteLine($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
 
@@ -91,4 +87,5 @@ namespace FingerPrintDetector
             });
         }
     }
+
 }
