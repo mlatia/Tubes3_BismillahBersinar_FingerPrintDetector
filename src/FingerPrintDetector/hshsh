@@ -1,0 +1,15 @@
+this.KewarganegaraanPanel = new System.Windows.Forms.Panel();
+this.KewarganegaraanPanel.BackColor = System.Drawing.Color.White;
+this.KewarganegaraanPanel.Location = new System.Drawing.Point(820, 220);
+this.KewarganegaraanPanel.Size = new System.Drawing.Size(350, 30);
+this.KewarganegaraanPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+this.KewarganegaraanPanel.Padding = new Padding(10, 0, 0, 0);
+this.Controls.Add(this.KewarganegaraanPanel);
+
+this.KewarganegaraanLabel = new System.Windows.Forms.Label();
+this.KewarganegaraanLabel.AutoSize = true;
+this.KewarganegaraanLabel.Location = new System.Drawing.Point(5, 5); 
+this.KewarganegaraanLabel.Name = "KewarganegaraanLabel";
+this.KewarganegaraanLabel.TabIndex = 8;
+this.KewarganegaraanLabel.Text = "Kewarganegaraan: ";
+this.KewarganegaraanPanel.Controls.Add(this.KewarganegaraanLabel);

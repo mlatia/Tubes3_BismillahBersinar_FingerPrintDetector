@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Data.Sqlite;
 
 namespace FingerPrintDetector
 {
@@ -75,17 +76,30 @@ namespace FingerPrintDetector
             
                 Console.WriteLine($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
 
+                string personName = Database.GetPersonNameByImagePath(mostSimilar);
+                var biodata = Database.GetBiodataByName(personName);
+
                 this.Invoke((Action)(() =>
                 {
-    
+                     // Update Biodata
+                    NIKLabel.Text = $"NIK: {biodata.NIK}";
+                    NamaLabel.Text = $"Nama: {biodata.Nama}";
+                    LahirLabel.Text = $"Tempat Lahir: {biodata.TempatLahir}";
+                    TanggalLabel.Text = $"Tanggal Lahir: {biodata.TanggalLahir.ToShortDateString()}";
+                    KelaminLabel.Text = $"Jenis Kelamin: {biodata.JenisKelamin}";
+                    GoldarLabel.Text = $"Golongan Darah: {biodata.GolonganDarah}";
+                    AlamatLabel.Text = $"Alamat: {biodata.Alamat}";
+                    AgamaLabel.Text = $"Agama: {biodata.Agama}";
+                    StatusLabel.Text = $"Status Perkawinan: {biodata.StatusPerkawinan}";
+                    KerjaLabel.Text = $"Pekerjaan: {biodata.Pekerjaan}";
+                    KewarganegaraanLabel.Text = $"Kewarganegaraan: {biodata.Kewarganegaraan}";
 
-                    Console.WriteLine("Input fingerprint:");
-                    MessageBox.Show($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
                     SearchButton.Enabled = true;
                     Console.WriteLine("Search button re-enabled");
                 }));
             });
         }
+
     }
 
 }

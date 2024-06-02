@@ -5,6 +5,28 @@ namespace FingerPrintDetector
 {
     partial class MainForm
     {
+        private System.Windows.Forms.Label NIKLabel;
+        private System.Windows.Forms.Panel NIKPanel;
+        private System.Windows.Forms.Label NamaLabel;
+        private System.Windows.Forms.Panel NamaPanel;
+        private System.Windows.Forms.Label LahirLabel;
+        private System.Windows.Forms.Panel LahirPanel;
+        private System.Windows.Forms.Label TanggalLabel;
+        private System.Windows.Forms.Panel TanggalPanel;
+        private System.Windows.Forms.Label KelaminLabel;
+        private System.Windows.Forms.Panel KelaminPanel;
+        private System.Windows.Forms.Label GoldarLabel;
+        private System.Windows.Forms.Panel GoldarPanel;
+        private System.Windows.Forms.Label AlamatLabel;
+        private System.Windows.Forms.Panel AlamatPanel;
+        private System.Windows.Forms.Label AgamaLabel;
+        private System.Windows.Forms.Panel AgamaPanel;
+        private System.Windows.Forms.Label StatusLabel;
+        private System.Windows.Forms.Panel StatusPanel;
+        private System.Windows.Forms.Label KerjaLabel;
+        private System.Windows.Forms.Panel KerjaPanel;
+        private System.Windows.Forms.Label KewarganegaraanLabel;
+        private System.Windows.Forms.Panel KewarganegaraanPanel;
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.PictureBox SimilarImagePictureBox;
 
@@ -107,28 +129,205 @@ namespace FingerPrintDetector
             this.AlgorithmComboBox.Size = new System.Drawing.Size(150, 40);
             this.AlgorithmComboBox.Font = new System.Drawing.Font("Ubuntu Condensed", 15F);
             this.AlgorithmComboBox.TabIndex = 4;
+
+            this.NIKPanel = new System.Windows.Forms.Panel();
+            this.NIKPanel.BackColor = System.Drawing.Color.White;
+            this.NIKPanel.Location = new System.Drawing.Point(820, 220);
+            this.NIKPanel.Size = new System.Drawing.Size(350, 30);
+            this.NIKPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NIKPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.NIKPanel);
+
+            this.NIKLabel = new System.Windows.Forms.Label();
+            this.NIKLabel.AutoSize = true;
+            this.NIKLabel.Location = new System.Drawing.Point(5, 5); 
+            this.NIKLabel.Name = "NIKLabel";
+            this.NIKLabel.TabIndex = 8;
+            this.NIKLabel.Text = "NIK: ";
+            this.NIKPanel.Controls.Add(this.NIKLabel);
+
+            this.NamaPanel = new System.Windows.Forms.Panel();
+            this.NamaPanel.BackColor = System.Drawing.Color.White;
+            this.NamaPanel.Location = new System.Drawing.Point(820, 255);
+            this.NamaPanel.Size = new System.Drawing.Size(350, 30);
+            this.NamaPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NamaPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.NamaPanel);
+
+            this.NamaLabel = new System.Windows.Forms.Label();
+            this.NamaLabel.AutoSize = true;
+            this.NamaLabel.Location = new System.Drawing.Point(5, 5); 
+            this.NamaLabel.Name = "NamaLabel";
+            this.NamaLabel.TabIndex = 8;
+            this.NamaLabel.Text = "Nama: ";
+            this.NamaPanel.Controls.Add(this.NamaLabel);
+
+            this.LahirPanel = new System.Windows.Forms.Panel();
+            this.LahirPanel.BackColor = System.Drawing.Color.White;
+            this.LahirPanel.Location = new System.Drawing.Point(820, 290);
+            this.LahirPanel.Size = new System.Drawing.Size(350, 30);
+            this.LahirPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LahirPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.LahirPanel);
+
+            this.LahirLabel = new System.Windows.Forms.Label();
+            this.LahirLabel.AutoSize = true;
+            this.LahirLabel.Location = new System.Drawing.Point(5, 5); 
+            this.LahirLabel.Name = "LahirLabel";
+            this.LahirLabel.TabIndex = 8;
+            this.LahirLabel.Text = "Tempat Lahir: ";
+            this.LahirPanel.Controls.Add(this.LahirLabel);
+
+            this.TanggalPanel = new System.Windows.Forms.Panel();
+            this.TanggalPanel.BackColor = System.Drawing.Color.White;
+            this.TanggalPanel.Location = new System.Drawing.Point(820, 325);
+            this.TanggalPanel.Size = new System.Drawing.Size(350, 30);
+            this.TanggalPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TanggalPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.TanggalPanel);
+
+            this.TanggalLabel = new System.Windows.Forms.Label();
+            this.TanggalLabel.AutoSize = true;
+            this.TanggalLabel.Location = new System.Drawing.Point(5, 5); 
+            this.TanggalLabel.Name = "TanggalLabel";
+            this.TanggalLabel.TabIndex = 8;
+            this.TanggalLabel.Text = "Tanggal Lahir: ";
+            this.TanggalPanel.Controls.Add(this.TanggalLabel);
+
+            this.KelaminPanel = new System.Windows.Forms.Panel();
+            this.KelaminPanel.BackColor = System.Drawing.Color.White;
+            this.KelaminPanel.Location = new System.Drawing.Point(820, 360);
+            this.KelaminPanel.Size = new System.Drawing.Size(350, 30);
+            this.KelaminPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.KelaminPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.KelaminPanel);
+
+            this.KelaminLabel = new System.Windows.Forms.Label();
+            this.KelaminLabel.AutoSize = true;
+            this.KelaminLabel.Location = new System.Drawing.Point(5, 5); 
+            this.KelaminLabel.Name = "KelaminLabel";
+            this.KelaminLabel.TabIndex = 8;
+            this.KelaminLabel.Text = "Jenis Kelamin: ";
+            this.KelaminPanel.Controls.Add(this.KelaminLabel);
+
+            this.GoldarPanel = new System.Windows.Forms.Panel();
+            this.GoldarPanel.BackColor = System.Drawing.Color.White;
+            this.GoldarPanel.Location = new System.Drawing.Point(820, 395);
+            this.GoldarPanel.Size = new System.Drawing.Size(350, 30);
+            this.GoldarPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.GoldarPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.GoldarPanel);
+
+            this.GoldarLabel = new System.Windows.Forms.Label();
+            this.GoldarLabel.AutoSize = true;
+            this.GoldarLabel.Location = new System.Drawing.Point(5, 5); 
+            this.GoldarLabel.Name = "GoldarLabel";
+            this.GoldarLabel.TabIndex = 8;
+            this.GoldarLabel.Text = "Golongan Darah: ";
+            this.GoldarPanel.Controls.Add(this.GoldarLabel);
+
+            this.AlamatPanel = new System.Windows.Forms.Panel();
+            this.AlamatPanel.BackColor = System.Drawing.Color.White;
+            this.AlamatPanel.Location = new System.Drawing.Point(820, 430);
+            this.AlamatPanel.Size = new System.Drawing.Size(350, 30);
+            this.AlamatPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.AlamatPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.AlamatPanel);
+
+            this.AlamatLabel = new System.Windows.Forms.Label();
+            this.AlamatLabel.AutoSize = true;
+            this.AlamatLabel.Location = new System.Drawing.Point(5, 5); 
+            this.AlamatLabel.Name = "AlamatLabel";
+            this.AlamatLabel.TabIndex = 8;
+            this.AlamatLabel.Text = "Alamat: ";
+            this.AlamatPanel.Controls.Add(this.AlamatLabel);
+
+            this.AgamaPanel = new System.Windows.Forms.Panel();
+            this.AgamaPanel.BackColor = System.Drawing.Color.White;
+            this.AgamaPanel.Location = new System.Drawing.Point(820, 465);
+            this.AgamaPanel.Size = new System.Drawing.Size(350, 30);
+            this.AgamaPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.AgamaPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.AgamaPanel);
+
+            this.AgamaLabel = new System.Windows.Forms.Label();
+            this.AgamaLabel.AutoSize = true;
+            this.AgamaLabel.Location = new System.Drawing.Point(5, 5); 
+            this.AgamaLabel.Name = "AgamaLabel";
+            this.AgamaLabel.TabIndex = 8;
+            this.AgamaLabel.Text = "Agama: ";
+            this.AgamaPanel.Controls.Add(this.AgamaLabel);
+
+            this.StatusPanel = new System.Windows.Forms.Panel();
+            this.StatusPanel.BackColor = System.Drawing.Color.White;
+            this.StatusPanel.Location = new System.Drawing.Point(820, 500);
+            this.StatusPanel.Size = new System.Drawing.Size(350, 30);
+            this.StatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.StatusPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.StatusPanel);
+
+            this.StatusLabel = new System.Windows.Forms.Label();
+            this.StatusLabel.AutoSize = true;
+            this.StatusLabel.Location = new System.Drawing.Point(5, 5); 
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.TabIndex = 8;
+            this.StatusLabel.Text = "Status Perkawinan: ";
+            this.StatusPanel.Controls.Add(this.StatusLabel);
+
+            this.KerjaPanel = new System.Windows.Forms.Panel();
+            this.KerjaPanel.BackColor = System.Drawing.Color.White;
+            this.KerjaPanel.Location = new System.Drawing.Point(820, 535);
+            this.KerjaPanel.Size = new System.Drawing.Size(350, 30);
+            this.KerjaPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.KerjaPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.KerjaPanel);
+
+            this.KerjaLabel = new System.Windows.Forms.Label();
+            this.KerjaLabel.AutoSize = true;
+            this.KerjaLabel.Location = new System.Drawing.Point(5, 5); 
+            this.KerjaLabel.Name = "KerjaLabel";
+            this.KerjaLabel.TabIndex = 8;
+            this.KerjaLabel.Text = "Pekerjaan: ";
+            this.KerjaPanel.Controls.Add(this.KerjaLabel);
+
+            this.KewarganegaraanPanel = new System.Windows.Forms.Panel();
+            this.KewarganegaraanPanel.BackColor = System.Drawing.Color.White;
+            this.KewarganegaraanPanel.Location = new System.Drawing.Point(820, 570);
+            this.KewarganegaraanPanel.Size = new System.Drawing.Size(350, 30);
+            this.KewarganegaraanPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.KewarganegaraanPanel.Padding = new Padding(10, 0, 0, 0);
+            this.Controls.Add(this.KewarganegaraanPanel);
+
+            this.KewarganegaraanLabel = new System.Windows.Forms.Label();
+            this.KewarganegaraanLabel.AutoSize = true;
+            this.KewarganegaraanLabel.Location = new System.Drawing.Point(5, 5); 
+            this.KewarganegaraanLabel.Name = "KewarganegaraanLabel";
+            this.KewarganegaraanLabel.TabIndex = 8;
+            this.KewarganegaraanLabel.Text = "Kewarganegaraan: ";
+            this.KewarganegaraanPanel.Controls.Add(this.KewarganegaraanLabel);
+
             // 
             // SearchTimeText
             // 
             this.SearchTimeText.AutoSize = true;
-            this.SearchTimeText.Location = new System.Drawing.Point(815, 540);
+            this.SearchTimeText.Location = new System.Drawing.Point(815, 610);
             this.SearchTimeText.Name = "SearchTimeText";
             this.SearchTimeText.Size = new System.Drawing.Size(131, 30);
             this.SearchTimeText.TabIndex = 5;
             this.SearchTimeText.Text = "Waktu Pencarian: xxx ms";
-            this.SearchTimeText.Font = new System.Drawing.Font("Ubuntu Condensed", 15F);
+            this.SearchTimeText.Font = new System.Drawing.Font("Ubuntu Condensed", 13F);
             this.SearchTimeText.BackColor = Color.Transparent;
 
             // 
             // MatchPercentageText
             // 
             this.MatchPercentageText.AutoSize = true;
-            this.MatchPercentageText.Location = new System.Drawing.Point(815, 570);
+            this.MatchPercentageText.Location = new System.Drawing.Point(815, 645);
             this.MatchPercentageText.Name = "MatchPercentageText";
             this.MatchPercentageText.Size = new System.Drawing.Size(151, 30);
             this.MatchPercentageText.TabIndex = 6;
             this.MatchPercentageText.Text = "Persentase Kecocokkan: xx%";
-            this.MatchPercentageText.Font = new System.Drawing.Font("Ubuntu Condensed", 15F);
+            this.MatchPercentageText.Font = new System.Drawing.Font("Ubuntu Condensed", 13F);
             this.MatchPercentageText.BackColor = Color.Transparent;
             // 
             // MainForm
