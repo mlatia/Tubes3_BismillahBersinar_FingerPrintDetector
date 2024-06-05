@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.Sqlite;
+using System.Diagnostics;
 
 namespace FingerPrintDetector
 {
@@ -68,8 +69,20 @@ namespace FingerPrintDetector
 
             await Task.Run(() =>
             {
-        
-                Tuple<string, int> result = KMP.FindMostSimilarFingerprint(inputFingerprint, database);
+             string selectedAlgorithm = AlgorithmComboBox.SelectedItem.ToString();
+                Tuple<string, int> result;
+
+                var stopwatch = Stopwatch.StartNew();
+                if (selectedAlgorithm == "BM") {
+                    result = BM.FindMostSimilarFingerprint(inputFingerprint, database);
+                }
+                else {
+                    result = KMP.FindMostSimilarFingerprint(inputFingerprint, database);
+                }
+
+                stopwatch.Stop(); 
+                long waktu = stopwatch.ElapsedMilliseconds;
+
                 string mostSimilar = result.Item1;
                 int distance = result.Item2;
                 SimilarImagePictureBox.Image = Image.FromFile(mostSimilar);
@@ -79,8 +92,14 @@ namespace FingerPrintDetector
                 string personName = Database.GetPersonNameByImagePath(mostSimilar);
                 var biodata = Database.GetBiodataByName(personName);
 
-                this.Invoke((Action)(() =>
-                {
+                float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
+                Console.WriteLine($"similarity: {similarity}");
+
+                this.Invoke((Action)(() =>{
+
+                    SearchTimeText.Text = $"Waktu Pencarian: {waktu} ms";
+                    MatchPercentageText.Text = $"Persentase Kecocokkan: {similarity}%";
+                    
                      // Update Biodata
                     NIKLabel.Text = $"NIK: {biodata.NIK}";
                     NamaLabel.Text = $"Nama: {biodata.Nama}";

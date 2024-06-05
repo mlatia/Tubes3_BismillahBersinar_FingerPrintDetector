@@ -124,6 +124,7 @@ namespace FingerPrintDetector
             this.AlgorithmComboBox.Items.AddRange(new object[] {
             "BM",
             "KMP"});
+            this.AlgorithmComboBox.SelectedIndex = 1;
             this.AlgorithmComboBox.Location = new System.Drawing.Point(435, 470);
             this.AlgorithmComboBox.Name = "AlgorithmComboBox";
             this.AlgorithmComboBox.Size = new System.Drawing.Size(150, 40);
