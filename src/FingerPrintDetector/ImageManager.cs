@@ -49,7 +49,7 @@ namespace FingerPrintDetector
             // Iterasi melalui setiap piksel dan mengonversinya ke ASCII 8-bit
            
             for (int y = 0; y < image.Height; y++) {
-                 if(crop>60){
+                 if(crop>29){
                     break;
                 }
                 for (int x = 0; x < image.Width; x++) {      
@@ -69,19 +69,20 @@ namespace FingerPrintDetector
                     }
     
 
-                     if(crop>60){
+                     if(crop>29){
                         break;
                     }
                 }
             }
 
-            if (crop<=60){
-                while (crop<=60){
+            if (crop<=30){
+                while (crop<=30){
                     asciiArtBuilder.Append("");
                     crop +=1;
                 }
             }
         
+
 
             // Mengembalikan hasil ASCII dalam bentuk string
             return asciiArtBuilder.ToString();

@@ -96,7 +96,9 @@ namespace FingerPrintDetector
                     mostSimilarFingerprint = fingerprint;
                     break;
                 } else{
-                    distance = Similarity.HammingDistance(fingerprint, inputFingerprint);
+                    string subText = dataFingerprint.Substring(0, 30);
+                    Console.WriteLine(subText);
+                    distance = Similarity.CalculateHammingDistance(subText, inputFingerprint);
                 }
                 
                 Console.WriteLine("Hamming distance:");

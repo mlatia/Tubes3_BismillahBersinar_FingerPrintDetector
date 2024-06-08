@@ -16,6 +16,12 @@ namespace FingerPrintDetector
         public MainForm()
         {
             InitializeComponent();
+            // this.Size = new Size(800, 400);
+        
+            // Non-resizable form
+            // this.MaximizeBox = false;
+            this.MinimizeBox = false;
+
         }
 
         private void UploadImageButton_Click(object sender, EventArgs e)
@@ -62,7 +68,10 @@ namespace FingerPrintDetector
             string inputFingerprint = ImageManager.ImagetoAscii("assets/input.BMP",1);
             Console.WriteLine($"Input fingerprint: {inputFingerprint}");
 
-
+            string inputFingerprint2 = ImageManager.ImagetoAscii("assets/input.BMP",0);
+            int length = inputFingerprint2.Length;
+            // Mengambil substring 30 karakter dari belakang
+            string inputend = inputFingerprint2.Substring(Math.Max(0, length - 30));
 
             List<string> database = ImageManager.GetAllImagePaths("test/real");
 
@@ -72,22 +81,34 @@ namespace FingerPrintDetector
             await Task.Run(() =>
             {
              string selectedAlgorithm = AlgorithmComboBox.SelectedItem.ToString();
-                Tuple<string, int> result;
+                Tuple<string, int> result, result1, result2;
+
+                string mostSimilar;
+                int distance;
 
                 var stopwatch = Stopwatch.StartNew();
                 if (selectedAlgorithm == "BM") {
-                    result = BM.FindMostSimilarFingerprint(inputFingerprint, database);
+                    result1 = BM.FindMostSimilarFingerprint(inputFingerprint, database);
+                    result2 = BM.FindMostSimilarFingerprint(inputend, database);
                 }
                 else {
-                    result = KMP.FindMostSimilarFingerprint(inputFingerprint, database);
+                    result1 = KMP.FindMostSimilarFingerprint(inputFingerprint, database);
+                    result2 = KMP.FindMostSimilarFingerprint(inputend, database);
+                }
+
+                int distance1 = result1.Item2;
+                int distance2 = result2.Item2;
+                if(distance1 < distance2){
+                    distance = distance1;
+                    mostSimilar = result1.Item1;
+                } else{
+                    distance = distance2;
+                    mostSimilar = result2.Item1;
                 }
 
                 stopwatch.Stop(); 
                 long waktu = stopwatch.ElapsedMilliseconds;
 
-                string mostSimilar = result.Item1;
-                int distance = result.Item2;
-                SimilarImagePictureBox.Image = Image.FromFile(mostSimilar);
             
                 Console.WriteLine($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
                 float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
@@ -105,20 +126,29 @@ namespace FingerPrintDetector
                 this.Invoke((Action)(() =>{
 
                     SearchTimeText.Text = $"Waktu Pencarian: {waktu} ms";
-                    MatchPercentageText.Text = $"Persentase Kecocokkan: {similarity}%";
-                    
-                     // Update Biodata
-                    NIKLabel.Text = $"NIK: {biodata.NIK}";
-                    NamaLabel.Text = $"Nama: {personName}";
-                    LahirLabel.Text = $"Tempat Lahir: {biodata.TempatLahir}";
-                    TanggalLabel.Text = $"Tanggal Lahir: {biodata.TanggalLahir.ToShortDateString()}";
-                    KelaminLabel.Text = $"Jenis Kelamin: {biodata.JenisKelamin}";
-                    GoldarLabel.Text = $"Golongan Darah: {biodata.GolonganDarah}";
-                    AlamatLabel.Text = $"Alamat: {biodata.Alamat}";
-                    AgamaLabel.Text = $"Agama: {biodata.Agama}";
-                    StatusLabel.Text = $"Status Perkawinan: {biodata.StatusPerkawinan}";
-                    KerjaLabel.Text = $"Pekerjaan: {biodata.Pekerjaan}";
-                    KewarganegaraanLabel.Text = $"Kewarganegaraan: {biodata.Kewarganegaraan}";
+                     // Jika similarity di bawah 80, tampilkan popup tidak ditemukan sidik jari yang cocok
+                    if (similarity < 50) {
+                        MessageBox.Show("Tidak ditemukan sidik jari yang cocok.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // Tampilkan persentase kecocokan dan biodata jika similarity di atas atau sama dengan 80
+                        MatchPercentageText.Text = $"Persentase Kecocokkan: {similarity}%";
+                        SimilarImagePictureBox.Image = Image.FromFile(mostSimilar);
+
+                        // Update Biodata
+                        NIKLabel.Text = $"NIK: {biodata.NIK}";
+                        NamaLabel.Text = $"Nama: {personName}";
+                        LahirLabel.Text = $"Tempat Lahir: {biodata.TempatLahir}";
+                        TanggalLabel.Text = $"Tanggal Lahir: {biodata.TanggalLahir.ToShortDateString()}";
+                        KelaminLabel.Text = $"Jenis Kelamin: {biodata.JenisKelamin}";
+                        GoldarLabel.Text = $"Golongan Darah: {biodata.GolonganDarah}";
+                        AlamatLabel.Text = $"Alamat: {biodata.Alamat}";
+                        AgamaLabel.Text = $"Agama: {biodata.Agama}";
+                        StatusLabel.Text = $"Status Perkawinan: {biodata.StatusPerkawinan}";
+                        KerjaLabel.Text = $"Pekerjaan: {biodata.Pekerjaan}";
+                        KewarganegaraanLabel.Text = $"Kewarganegaraan: {biodata.Kewarganegaraan}";
+                    }
 
                     SearchButton.Enabled = true;
                     Console.WriteLine("Search button re-enabled");

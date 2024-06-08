@@ -41,6 +41,9 @@ namespace FingerPrintDetector
 
         private void InitializeComponent()
         {
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+
             // Menyesuaikan ukuran jendela
             this.Size = Screen.PrimaryScreen.Bounds.Size;
             this.WindowState = FormWindowState.Maximized;

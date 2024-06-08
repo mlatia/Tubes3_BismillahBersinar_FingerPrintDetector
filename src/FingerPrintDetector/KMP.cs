@@ -51,7 +51,8 @@ public class KMP
                 mostSimilarFingerprint = fingerprint;
                 break;
             } else{
-                distance = Similarity.HammingDistance(fingerprint, inputFingerprint);
+                string subText = dataFingerprint.Substring(0, 30);
+                distance = Similarity.CalculateHammingDistance(subText, inputFingerprint);
             }
 
             if (distance < minDistance)
