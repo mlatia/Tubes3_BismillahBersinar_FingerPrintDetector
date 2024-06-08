@@ -23,6 +23,22 @@ namespace FingerPrintDetector{
             return hammingDistance;
         }
 
+        public static int  HammingDistance(string text, string pattern) {
+          
+            int hammingDistance = 10000;
+
+            for (int i = 0; i < text.Length - 60; i++){
+                string subText = text.Substring(i, 59);
+                int tempHammingDistance = Similarity.CalculateHammingDistance(pattern, subText);
+                if(tempHammingDistance < hammingDistance){
+                    hammingDistance = tempHammingDistance;
+                }
+            }
+
+
+            return hammingDistance;
+        }
+
         public static int CalculateLevenshteinDistance(string text1, string text2)
         {
             int m = text1.Length;

@@ -17,7 +17,7 @@ namespace FingerPrintDetector
             }
             return lastOccurrence;
         }
-        public static int BmSearch(string text, string pattern)
+        public static bool BmSearch(string text, string pattern)
         {
             // Swap if pattern is longer than text
             if (pattern.Length > text.Length)
@@ -57,7 +57,8 @@ namespace FingerPrintDetector
                 {
                     if (patternIndex == 0)
                     {
-                        return 0;
+                        return true;
+                        
                     }
                     else
                     {
@@ -67,14 +68,6 @@ namespace FingerPrintDetector
                 }
                 else
                 {
-                    int subPatternLength = Math.Min(patternIndex + 1, textIndex + 1);
-                    string subPattern = pattern.Substring(0, subPatternLength);
-                    string subText = text.Substring(textIndex - subPatternLength + 1, subPatternLength);
-
-                    int tempHammingDistance = Similarity.CalculateHammingDistance(subPattern, subText);
-                    if (tempHammingDistance < hammingDistance){
-                        hammingDistance = tempHammingDistance;
-                    }
                     int lastOccurIndex = lastOccurrence.GetValueOrDefault(text[textIndex], -1);
                     textIndex += patternLength - Math.Min(patternIndex, 1 + lastOccurIndex);
                     patternIndex = patternLength - 1;
@@ -87,17 +80,24 @@ namespace FingerPrintDetector
                 }
             }
             
-            return hammingDistance;
+            return false;
         }
 
         public static Tuple<string, int> FindMostSimilarFingerprint(string inputFingerprint, List<string> database) {
             string mostSimilarFingerprint = null;
             int minDistance = int.MaxValue;
-
+            int distance;
             foreach (string fingerprint in database) {
-                string dataFingerprint = ImageManager.ImagetoAscii(fingerprint);
-                int result = BmSearch(dataFingerprint, inputFingerprint);
-                int distance = result;
+                string dataFingerprint = ImageManager.ImagetoAscii(fingerprint,0);
+                bool result = BmSearch(dataFingerprint, inputFingerprint);
+
+                if (result){
+                    minDistance = 0;
+                    mostSimilarFingerprint = fingerprint;
+                    break;
+                } else{
+                    distance = Similarity.HammingDistance(fingerprint, inputFingerprint);
+                }
                 
                 Console.WriteLine("Hamming distance:");
                 Console.WriteLine(distance);
