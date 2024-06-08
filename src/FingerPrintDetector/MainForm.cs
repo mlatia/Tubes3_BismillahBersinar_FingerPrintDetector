@@ -90,7 +90,10 @@ namespace FingerPrintDetector
                 Console.WriteLine($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
 
                 string personName = Database.GetPersonNameByImagePath(mostSimilar);
-                var biodata = Database.GetBiodataByName(personName);
+                Console.WriteLine($"Person name: {personName}");
+                // Handle Bahasa Alay
+                string alayPersonName = RegexHelper.GetAlayName(personName);
+                var biodata = Database.GetBiodataByName(alayPersonName);
 
                 float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
                 Console.WriteLine($"similarity: {similarity}");
@@ -102,7 +105,7 @@ namespace FingerPrintDetector
                     
                      // Update Biodata
                     NIKLabel.Text = $"NIK: {biodata.NIK}";
-                    NamaLabel.Text = $"Nama: {biodata.Nama}";
+                    NamaLabel.Text = $"Nama: {personName}";
                     LahirLabel.Text = $"Tempat Lahir: {biodata.TempatLahir}";
                     TanggalLabel.Text = $"Tanggal Lahir: {biodata.TanggalLahir.ToShortDateString()}";
                     KelaminLabel.Text = $"Jenis Kelamin: {biodata.JenisKelamin}";

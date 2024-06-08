@@ -7,36 +7,41 @@ namespace FingerPrintDetector
 {
     public static class RegexHelper
     {
+        private static string ConvertAlayToNormal(string alayText){
+            var alayPatterns = new Dictionary<string, string>
+            {
+                { "[4@Aa]", "a" },
+                { "[8Bb]", "b" },
+                { "[3Ee]", "e" },
+                { "[6Gg]", "g" },
+                { "[1!Ii]", "i" },
+                { "[0Oo]", "o" },
+                { "[5$Ss]", "s" },
+                { "[7Tt]", "t" },
+                { "[2Zz]", "z" },
+                { "[@]", "a" },
+                { "[!]", "i" },
+                { "[$]", "s" },
+                { "[<\\[]", "c" },
+                { "[|<]", "k" },
+                { "[+]", "t" }
+            };
+
+            foreach (var pattern in alayPatterns)
+            {
+                alayText = Regex.Replace(alayText, pattern.Key, pattern.Value, RegexOptions.IgnoreCase);
+            }
+
+            // Mengabaikan kombinasi huruf besar-kecil
+            alayText = alayText.ToLower();
+
+            return alayText;
+
+        }
+       
         public static bool IsMatch(string input, string pattern)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
-        }
-
-        public static List<string> FindMatches(string input, List<string> patterns)
-        {
-            var matches = new List<string>();
-            foreach (var pattern in patterns)
-            {
-                if (IsMatch(input, pattern))
-                {
-                    matches.Add(pattern);
-                }
-            }
-            return matches;
-        }
-
-        public static List<string> GenerateCommonPatterns()
-        {
-            return new List<string>
-            {
-                @"^[a-zA-Z]+$", // Only letters
-                @"^[A-Z][a-z]+$", // Capital first letter
-                @"^[a-z]+[0-9]+$", // Letters followed by numbers
-                @"^[A-Za-z0-9]+$", // Alphanumeric
-                @"^[A-Z]+$", // All uppercase
-                @"^[a-z]+$", // All lowercase
-                @"^[0-9]+$" // All numbers
-            };
         }
 
         public static int LevenshteinDistance(string s1, string s2)
@@ -62,9 +67,19 @@ namespace FingerPrintDetector
 
         public static string FindClosestMatch(string input, List<string> candidates)
         {
-            if (string.IsNullOrEmpty(input) || candidates == null || candidates.Count == 0)
+            if (string.IsNullOrEmpty(input))
             {
-                throw new ArgumentException("Input or candidates cannot be null or empty.");
+                throw new ArgumentException("Input cannot be null or empty.", nameof(input));
+            }
+
+            if (candidates == null)
+            {
+                throw new ArgumentNullException(nameof(candidates), "Candidates cannot be null.");
+            }
+
+            if (candidates.Count == 0)
+            {
+                throw new ArgumentException("Candidates cannot be an empty list.", nameof(candidates));
             }
 
             string closestMatch = null;
@@ -86,7 +101,8 @@ namespace FingerPrintDetector
         public static List<string> GetAllNamesFromBiodata()
         {
             var names = new List<string>();
-            string connectionString = $"Data Source=stima.db";
+            string connectionString = $"Data Source=fingerprintalay.db";
+            // string connectionString = $"Data Source=stima.db";
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -106,27 +122,27 @@ namespace FingerPrintDetector
             return names;
         }
 
-        public static List<string> GetAllNamesFromSidikJari()
-        {
-            var names = new List<string>();
-            string connectionString = $"Data Source=stima.db";
-            using (var connection = new SqliteConnection(connectionString))
+        public static string GetAlayName(string sidikJariName){
+            List<string> biodataAlayNames = RegexHelper.GetAllNamesFromBiodata();
+            Dictionary<string, string> biodataNameAlayMap = new Dictionary<string, string>();
+            foreach (string alayName in biodataAlayNames)
             {
-                connection.Open();
-
-                string query = "SELECT nama FROM sidik_jari";
-                using (var command = new SqliteCommand(query, connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            names.Add(reader.GetString(0));
-                        }
-                    }
-                }
+                string normalName = ConvertAlayToNormal(alayName);
+                biodataNameAlayMap[normalName] = alayName;
             }
-            return names;
+            List<string> biodataNormalNames = new List<string>();
+            foreach (var pair in biodataNameAlayMap)
+            {
+                biodataNormalNames.Add(pair.Key);
+            }
+
+            string closestMatch = RegexHelper.FindClosestMatch(sidikJariName, biodataNormalNames);
+            string alayClosestMatch = biodataNameAlayMap[closestMatch];
+            int distance = RegexHelper.LevenshteinDistance(sidikJariName, closestMatch);
+            float similarity = (1 - (float)distance / Math.Max(sidikJariName.Length, closestMatch.Length)) * 100;
+
+            Console.WriteLine($"Sidik Jari Name: {sidikJariName}, Closest Biodata Match: {alayClosestMatch}, Distance: {distance}, Similarity: {similarity}%");    
+            return alayClosestMatch;
         }
     }
 }

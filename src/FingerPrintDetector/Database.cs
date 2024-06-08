@@ -5,7 +5,8 @@ namespace FingerPrintDetector{
     public class Database{
     public static string GetPersonNameByImagePath(string imagePath) {
      
-        string connectionString = $"Data Source=stima.db";
+        string connectionString = $"Data Source=fingerprintalay.db";
+        // string connectionString = $"Data Source=stima.db";
         using (var connection = new SqliteConnection(connectionString))
         {
             connection.Open();
@@ -22,7 +23,8 @@ namespace FingerPrintDetector{
 
     public static Biodata GetBiodataByName(string name) {
 
-        string connectionString = $"Data Source=stima.db";
+        string connectionString = $"Data Source=fingerprintalay.db";
+        // string connectionString = $"Data Source=stima.db";
         using (var connection = new SqliteConnection(connectionString))
         {
             connection.Open();
