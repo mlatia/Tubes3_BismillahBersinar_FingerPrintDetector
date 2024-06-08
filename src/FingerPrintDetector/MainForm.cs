@@ -59,8 +59,10 @@ namespace FingerPrintDetector
             SearchButton.Enabled = false;
             Console.WriteLine("Search button clicked");
 
-            string inputFingerprint = ImageManager.ImagetoAscii("assets/input.BMP");
+            string inputFingerprint = ImageManager.ImagetoAscii("assets/input.BMP",1);
             Console.WriteLine($"Input fingerprint: {inputFingerprint}");
+
+
 
             List<string> database = ImageManager.GetAllImagePaths("test/real");
 
@@ -88,12 +90,14 @@ namespace FingerPrintDetector
                 SimilarImagePictureBox.Image = Image.FromFile(mostSimilar);
             
                 Console.WriteLine($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
+                float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
+                Console.WriteLine($"similarity: {similarity}");
 
                 string personName = Database.GetPersonNameByImagePath(mostSimilar);
                 var biodata = Database.GetBiodataByName(personName);
 
-                float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
-                Console.WriteLine($"similarity: {similarity}");
+                // float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
+                // Console.WriteLine($"similarity: {similarity}");
 
                 this.Invoke((Action)(() =>{
 
