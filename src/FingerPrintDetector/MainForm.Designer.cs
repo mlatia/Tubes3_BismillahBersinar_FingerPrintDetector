@@ -87,9 +87,9 @@ namespace FingerPrintDetector
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(350, 550);
+            this.SearchButton.Location = new System.Drawing.Point(345, 550);
             this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(150, 40);
+            this.SearchButton.Size = new System.Drawing.Size(200, 50);
             this.SearchButton.TabIndex = 2;
             this.SearchButton.Text = "SEARCH";
             this.SearchButton.UseVisualStyleBackColor = true;

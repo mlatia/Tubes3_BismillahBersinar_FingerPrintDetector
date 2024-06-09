@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.Sqlite;
@@ -14,6 +15,7 @@ namespace FingerPrintDetector
     {
         private string imagePath;
         public static Dictionary<string, Biodata> biodataDict = new Dictionary<string, Biodata>();
+        private Color originalColor;
 
         public MainForm()
         {
@@ -112,6 +114,17 @@ namespace FingerPrintDetector
             SearchButton.Enabled = false;
             Console.WriteLine("Search button clicked");
 
+            // Loading Animation
+            CancellationTokenSource cts = new CancellationTokenSource();
+            Task animationTask = AnimateSearchButton(cts.Token);
+            SearchButton.BackColor = Color.SkyBlue;
+
+            for (int i = 0; i < 3; i++)
+            {
+                SearchButton.Text += ".";
+                await Task.Delay(500); // Tunda 0.5 detik
+            }
+
             string inputFingerprint = ImageManager.ImagetoAscii("assets/input.BMP",1);
             string allFingerprint = ImageManager.ImagetoAscii("assets/input.BMP",0);
             Console.WriteLine($"Input fingerprint: {inputFingerprint}");
@@ -168,9 +181,14 @@ namespace FingerPrintDetector
 
 
                 this.Invoke((Action)(() =>{
+                    // Hentikan animasi loading
+                    cts.Cancel();
+                    SearchButton.Text = "SEARCH";
+                    SearchButton.BackColor = ColorTranslator.FromHtml("#333A6E");
+                    SearchButton.Enabled = true;
 
                     SearchTimeText.Text = $"Waktu Pencarian: {waktu} ms";
-                     // Jika similarity di bawah 50, tampilkan popup tidak ditemukan sidik jari yang cocok
+                    // Jika similarity di bawah 50, tampilkan popup tidak ditemukan sidik jari yang cocok
                     if (similarity < 50) {
                         MatchPercentageText.Text = $"Persentase Kecocokkan: Not Found";
                         SimilarImagePictureBox.Image = null;
@@ -187,7 +205,7 @@ namespace FingerPrintDetector
                         StatusLabel.Text = $"Status Perkawinan: ";
                         KerjaLabel.Text = $"Pekerjaan: ";
                         KewarganegaraanLabel.Text = $"Kewarganegaraan: ";
-                         MessageBox.Show("Tidak ditemukan sidik jari yang cocok.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Tidak ditemukan sidik jari yang cocok.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
@@ -215,6 +233,21 @@ namespace FingerPrintDetector
             });
         }
 
-    }
+        private async Task AnimateSearchButton(CancellationToken token)
+        {
+            string[] loadingTexts = { "SEARCHING", "SEARCHING.", "SEARCHING..", "SEARCHING..." };
+            int index = 0;
 
+            while (!token.IsCancellationRequested)
+            {
+                SearchButton.Invoke((Action)(() =>
+                {
+                    SearchButton.Text = loadingTexts[index];
+                }));
+
+                index = (index + 1) % loadingTexts.Length;
+                await Task.Delay(100);
+            }
+        }
+    }
 }
