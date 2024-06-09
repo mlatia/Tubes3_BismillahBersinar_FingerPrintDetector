@@ -130,7 +130,22 @@ namespace FingerPrintDetector
                     SearchTimeText.Text = $"Waktu Pencarian: {waktu} ms";
                      // Jika similarity di bawah 80, tampilkan popup tidak ditemukan sidik jari yang cocok
                     if (similarity < 50) {
-                        MessageBox.Show("Tidak ditemukan sidik jari yang cocok.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MatchPercentageText.Text = $"Persentase Kecocokkan: Not Found";
+                        SimilarImagePictureBox.Image = null;
+
+                        // Update Biodata
+                        NIKLabel.Text = $"NIK: ";
+                        NamaLabel.Text = $"Nama: ";
+                        LahirLabel.Text = $"Tempat Lahir: ";
+                        TanggalLabel.Text = $"Tanggal Lahir: ";
+                        KelaminLabel.Text = $"Jenis Kelamin: ";
+                        GoldarLabel.Text = $"Golongan Darah: ";
+                        AlamatLabel.Text = $"Alamat: ";
+                        AgamaLabel.Text = $"Agama: ";
+                        StatusLabel.Text = $"Status Perkawinan: ";
+                        KerjaLabel.Text = $"Pekerjaan: ";
+                        KewarganegaraanLabel.Text = $"Kewarganegaraan: ";
+                         MessageBox.Show("Tidak ditemukan sidik jari yang cocok.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
