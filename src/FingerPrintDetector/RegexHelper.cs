@@ -209,7 +209,7 @@ namespace FingerPrintDetector
         public static List<string> GetAllNamesFromBiodata()
         {
             var names = new List<string>();
-            string connectionString = $"Data Source=fingerprintalay.db";
+            string connectionString = $"Data Source=stima.db";
             // string connectionString = $"Data Source=stima.db";
             using (var connection = new SqliteConnection(connectionString))
             {
