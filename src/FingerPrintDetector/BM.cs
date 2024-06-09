@@ -29,20 +29,10 @@ namespace FingerPrintDetector
 
             // Initialize lastOccurrence Dictionary
             Dictionary<char, int> lastOccurrence = BmPreprocess(pattern);
-            // int[] lastOccurrence = new int[256];
-            // for (int i = 0; i < 256; i++)
-            //     lastOccurrence[i] = -1;
-            // for (int i = 0; i < pattern.Length; i++)
-            //     if (pattern[i] < 256)
-            //         lastOccurrence[pattern[i]] = i;
 
             // Initialize variables
             int textLength = text.Length;
             int patternLength = pattern.Length;
-            Console.WriteLine("Text Length:");
-            Console.WriteLine(textLength);
-            Console.WriteLine("Pattern Length:");
-            Console.WriteLine(patternLength);
             int hammingDistance = int.MaxValue;
             int textIndex = patternLength - 1;
             int patternIndex = patternLength - 1;
@@ -50,9 +40,6 @@ namespace FingerPrintDetector
             // Start the Boyer-Moore pattern matching with Hamming distance calculation
             while (textIndex < textLength)
             {   
-                // Console.WriteLine("current text index");
-                // Console.WriteLine(textIndex);
-
                 if (pattern[patternIndex] == text[textIndex])
                 {
                     if (patternIndex == 0)
@@ -97,12 +84,8 @@ namespace FingerPrintDetector
                     break;
                 } else{
                     string subText = dataFingerprint.Substring(0, 30);
-                    Console.WriteLine(subText);
                     distance = Similarity.CalculateHammingDistance(subText, inputFingerprint);
                 }
-                
-                Console.WriteLine("Hamming distance:");
-                Console.WriteLine(distance);
 
                 if (distance < minDistance)
                 {

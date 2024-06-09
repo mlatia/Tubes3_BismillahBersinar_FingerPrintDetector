@@ -75,7 +75,7 @@ namespace FingerPrintDetector
 
             List<string> database = ImageManager.GetAllImagePaths("test/real");
 
-            Console.WriteLine("INI DATABASEEEE");
+            Console.WriteLine("INI DATABASE");
             Console.WriteLine(database.Count);
 
             await Task.Run(() =>
@@ -117,7 +117,13 @@ namespace FingerPrintDetector
                 string personName = Database.GetPersonNameByImagePath(mostSimilar);
                 Console.WriteLine($"Person name: {personName}");
                 // Handle Bahasa Alay
-                string alayPersonName = RegexHelper.GetAlayName(personName);
+                string alayPersonName;
+                if (selectedAlgorithm == "BM") {
+                    alayPersonName = RegexHelper.GetAlayNameBM(personName);
+                }
+                else {
+                    alayPersonName = RegexHelper.GetAlayNameKMP(personName);
+                }
                 var biodata = Database.GetBiodataByName(alayPersonName);
 
                 // float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;

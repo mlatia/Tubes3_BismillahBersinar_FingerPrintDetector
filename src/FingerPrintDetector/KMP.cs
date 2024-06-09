@@ -20,7 +20,7 @@ public class KMP
         return prefix;
     }
 
-    static bool KmpSearch(string text, string pattern) {
+    public static bool KmpSearch(string text, string pattern) {
         int[] prefix = KmpPreprocess(pattern);
         int j = 0;
         for (int i = 0; i < text.Length; i++) {

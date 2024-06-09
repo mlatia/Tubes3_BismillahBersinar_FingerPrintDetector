@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
 
@@ -7,26 +9,25 @@ namespace FingerPrintDetector
 {
     public static class RegexHelper
     {
+        private static Dictionary<string, string> alayPatterns = new Dictionary<string, string>
+        {
+            { "[4@Aa]", "a" },
+            { "[8Bb]", "b" },
+            { "[3Ee]", "e" },
+            { "[6Gg]", "g" },
+            { "[1!Ii]", "i" },
+            { "[0Oo]", "o" },
+            { "[5$Ss]", "s" },
+            { "[7Tt]", "t" },
+            { "[2Zz]", "z" },
+            { "[@]", "a" },
+            { "[!]", "i" },
+            { "[$]", "s" },
+            { "[<\\[]", "c" },
+            { "[|<]", "k" },
+            { "[+]", "t" }
+        };
         private static string ConvertAlayToNormal(string alayText){
-            var alayPatterns = new Dictionary<string, string>
-            {
-                { "[4@Aa]", "a" },
-                { "[8Bb]", "b" },
-                { "[3Ee]", "e" },
-                { "[6Gg]", "g" },
-                { "[1!Ii]", "i" },
-                { "[0Oo]", "o" },
-                { "[5$Ss]", "s" },
-                { "[7Tt]", "t" },
-                { "[2Zz]", "z" },
-                { "[@]", "a" },
-                { "[!]", "i" },
-                { "[$]", "s" },
-                { "[<\\[]", "c" },
-                { "[|<]", "k" },
-                { "[+]", "t" }
-            };
-
             foreach (var pattern in alayPatterns)
             {
                 alayText = Regex.Replace(alayText, pattern.Key, pattern.Value, RegexOptions.IgnoreCase);
@@ -38,10 +39,42 @@ namespace FingerPrintDetector
             return alayText;
 
         }
-       
-        public static bool IsMatch(string input, string pattern)
+
+        public static string ConvertNormalToAlayRegex(string normalText)
         {
-            return System.Text.RegularExpressions.Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase);
+            StringBuilder result = new StringBuilder();
+            result.Append("(");  // Start the entire pattern with '('
+
+            foreach (char c in normalText)
+            {
+                string lowerChar = c.ToString().ToLower();
+                bool matchFound = false;
+
+                foreach (var pattern in alayPatterns)
+                {
+                    if (Regex.IsMatch(lowerChar, pattern.Value, RegexOptions.IgnoreCase))
+                    {
+                        result.Append($"{pattern.Key}?");
+                        matchFound = true;
+                        break;
+                    }
+                }
+
+                if (!matchFound)
+                {
+                    if (char.IsWhiteSpace(c))
+                    {
+                        result.Append("\\s?");
+                    }
+                    else
+                    {
+                        result.Append($"{c}?");
+                    }
+                }
+            }
+
+            result.Append(")");  // End the entire pattern with ')'
+            return result.ToString();
         }
 
         public static int LevenshteinDistance(string s1, string s2)
@@ -97,6 +130,81 @@ namespace FingerPrintDetector
 
             return closestMatch;
         }
+        public static string FindClosestMatchKMP(string input, List<string> candidates)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                throw new ArgumentException("Input cannot be null or empty.", nameof(input));
+            }
+
+            if (candidates == null)
+            {
+                throw new ArgumentNullException(nameof(candidates), "Candidates cannot be null.");
+            }
+
+            if (candidates.Count == 0)
+            {
+                throw new ArgumentException("Candidates cannot be an empty list.", nameof(candidates));
+            }
+
+            string closestMatch = null;
+            int minDistance = int.MaxValue;
+
+            foreach (var candidate in candidates)
+            {
+                bool isMatch = KMP.KmpSearch(candidate, input);
+
+                if (isMatch) {
+                    return candidate;
+                } else {
+                    int distance = LevenshteinDistance(input, candidate);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestMatch = candidate;
+                    }
+                }
+            }
+            return closestMatch;
+        }
+
+        public static string FindClosestMatchBM(string input, List<string> candidates)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                throw new ArgumentException("Input cannot be null or empty.", nameof(input));
+            }
+
+            if (candidates == null)
+            {
+                throw new ArgumentNullException(nameof(candidates), "Candidates cannot be null.");
+            }
+
+            if (candidates.Count == 0)
+            {
+                throw new ArgumentException("Candidates cannot be an empty list.", nameof(candidates));
+            }
+
+            string closestMatch = null;
+            int minDistance = int.MaxValue;
+
+            foreach (var candidate in candidates)
+            {
+                bool isMatch = BM.BmSearch(candidate, input);
+
+                if (isMatch) {
+                    return candidate;
+                } else {
+                    int distance = LevenshteinDistance(input, candidate);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestMatch = candidate;
+                    }
+                }
+            }
+            return closestMatch;
+        }
 
         public static List<string> GetAllNamesFromBiodata()
         {
@@ -136,12 +244,43 @@ namespace FingerPrintDetector
                 biodataNormalNames.Add(pair.Key);
             }
 
+            var stopwatch = Stopwatch.StartNew();
             string closestMatch = RegexHelper.FindClosestMatch(sidikJariName, biodataNormalNames);
             string alayClosestMatch = biodataNameAlayMap[closestMatch];
-            int distance = RegexHelper.LevenshteinDistance(sidikJariName, closestMatch);
+            int distance = LevenshteinDistance(sidikJariName, closestMatch);
+            stopwatch.Stop(); 
+            long waktu = stopwatch.ElapsedMilliseconds;
             float similarity = (1 - (float)distance / Math.Max(sidikJariName.Length, closestMatch.Length)) * 100;
 
-            Console.WriteLine($"Sidik Jari Name: {sidikJariName}, Closest Biodata Match: {alayClosestMatch}, Distance: {distance}, Similarity: {similarity}%");    
+            Console.WriteLine($"Sidik Jari Name: {sidikJariName}, Closest Biodata Match: {alayClosestMatch}, Distance: {distance}, Similarity: {similarity}% in {waktu} miliseconds.");    
+            return alayClosestMatch;
+        }
+        public static string GetAlayNameKMP(string sidikJariName){
+            string sidikJariNameRegex = ConvertNormalToAlayRegex(sidikJariName);
+            List<string> biodataAlayNames = RegexHelper.GetAllNamesFromBiodata();
+
+            var stopwatch = Stopwatch.StartNew();
+            string alayClosestMatch = RegexHelper.FindClosestMatchKMP(sidikJariNameRegex, biodataAlayNames);
+            stopwatch.Stop(); 
+            int distance = LevenshteinDistance(sidikJariName, alayClosestMatch);
+            long waktu = stopwatch.ElapsedMilliseconds;
+            float similarity = (1 - (float)distance / Math.Max(sidikJariName.Length, alayClosestMatch.Length)) * 100;
+
+            Console.WriteLine($"Sidik Jari Name: {sidikJariName}, Closest Biodata Match: {alayClosestMatch}, Distance: {distance}, Similarity: {similarity}% in {waktu} miliseconds.");    
+            return alayClosestMatch;
+        }
+        public static string GetAlayNameBM(string sidikJariName){
+            string sidikJariNameRegex = ConvertNormalToAlayRegex(sidikJariName);
+            List<string> biodataAlayNames = RegexHelper.GetAllNamesFromBiodata();
+
+            var stopwatch = Stopwatch.StartNew();
+            string alayClosestMatch = RegexHelper.FindClosestMatchBM(sidikJariNameRegex, biodataAlayNames);
+            stopwatch.Stop(); 
+            int distance = LevenshteinDistance(sidikJariName, alayClosestMatch);
+            long waktu = stopwatch.ElapsedMilliseconds;
+            float similarity = (1 - (float)distance / Math.Max(sidikJariName.Length, alayClosestMatch.Length)) * 100;
+
+            Console.WriteLine($"Sidik Jari Name: {sidikJariName}, Closest Biodata Match: {alayClosestMatch}, Distance: {distance}, Similarity: {similarity}% in {waktu} miliseconds.");    
             return alayClosestMatch;
         }
     }
