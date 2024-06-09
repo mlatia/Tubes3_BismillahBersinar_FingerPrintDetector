@@ -78,4 +78,4 @@ Basic Overview of the Application
 | Debrina Veisha Rashika W       | [debrinashika](https://github.com/debrinashika)   | 13522025 | 13522025@std.stei.itb.ac.id  |
 | Melati Anggraini               | [mlatia](https://github.com/mlatia)     | 13522035 | 13522035@std.stei.itb.ac.id  |
 | Shulha                         | [shulhajws](https://github.com/novelxv)     | 13522087 | 13522087@std.stei.itb.ac.id |
-| Miftahul Jannah                | [miftahstudy](https://github.com/miftahstudy)   | 10023500 |                      |
+| Miftahul Jannah                | [miftahstudy](https://github.com/miftahstudy)   | 10023500 | 10023500@std.stei.itb.ac.id |
