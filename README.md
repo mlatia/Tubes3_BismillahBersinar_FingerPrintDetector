@@ -66,7 +66,7 @@ Here is an overview of how BM works:
 
 ## Screenshots
 
-![Basic Overview of the Application]()<br>
+Basic Overview of the Application
 <div align="center">
     <img src="src/FingerPrintDetector/assets/GUI.gif" alt="readme1" width="600"/>
 </div>
