@@ -230,8 +230,18 @@ namespace FingerPrintDetector
             return names;
         }
 
+        public static List<string> GetAllNamesFromBiodataDict(){
+            var names = new List<string>();
+
+            foreach (var entry in MainForm.biodataDict){
+                names.Add(entry.Key);
+            }
+
+            return names;
+        }
+
         public static string GetAlayName(string sidikJariName){
-            List<string> biodataAlayNames = RegexHelper.GetAllNamesFromBiodata();
+            List<string> biodataAlayNames = RegexHelper.GetAllNamesFromBiodataDict();
             Dictionary<string, string> biodataNameAlayMap = new Dictionary<string, string>();
             foreach (string alayName in biodataAlayNames)
             {

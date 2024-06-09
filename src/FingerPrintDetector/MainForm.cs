@@ -6,22 +6,64 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Data.Sqlite;
 using System.Diagnostics;
+using System.Text;
 
 namespace FingerPrintDetector
 {
     public partial class MainForm : Form
     {
         private string imagePath;
+        public static Dictionary<string, Biodata> biodataDict = new Dictionary<string, Biodata>();
 
         public MainForm()
         {
             InitializeComponent();
-            // this.Size = new Size(800, 400);
-        
-            // Non-resizable form
-            // this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            string connectionString = "Data Source=stima_encrypted.db";
 
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                // Open connection
+                connection.Open();
+
+                string query = "SELECT * FROM biodata";
+                using (var command = new SqliteCommand(query, connection)) {
+                    using (var reader = command.ExecuteReader()) {
+                         while (reader.Read()){
+                        string nama = DecryptXor(reader["nama"].ToString(), "mysecretkey");
+
+                        if (!biodataDict.ContainsKey(nama)){
+                            Biodata attributes = new Biodata
+                            {
+                                NIK = DecryptXor(reader["NIK"].ToString(), "mysecretkey"),
+                                Nama = DecryptXor(reader["nama"].ToString(), "mysecretkey"),
+                                TempatLahir = DecryptXor(reader["tempat_lahir"].ToString(), "mysecretkey"),
+                                TanggalLahir = DateTime.Parse(reader["tanggal_lahir"].ToString()),
+                                JenisKelamin = DecryptXor(reader["jenis_kelamin"].ToString(), "mysecretkey"),
+                                GolonganDarah = DecryptXor(reader["golongan_darah"].ToString(), "mysecretkey"),
+                                Alamat = DecryptXor(reader["alamat"].ToString(), "mysecretkey"),
+                                Agama = DecryptXor(reader["agama"].ToString(), "mysecretkey"),
+                                StatusPerkawinan = DecryptXor(reader["status_perkawinan"].ToString(), "mysecretkey"),
+                                Pekerjaan = DecryptXor(reader["pekerjaan"].ToString(), "mysecretkey"),
+                                Kewarganegaraan = DecryptXor(reader["kewarganegaraan"].ToString(), "mysecretkey")
+                            };
+                            // Add to dictionary
+                            biodataDict.Add(nama, attributes);
+                        }
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+        private static string DecryptXor(string text, string key)
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < text.Length; i++){
+                result.Append((char)(text[i] ^ key[i % key.Length]));
+            }
+            return result.ToString();
         }
 
         private void UploadImageButton_Click(object sender, EventArgs e)
@@ -122,13 +164,13 @@ namespace FingerPrintDetector
                 Console.WriteLine($"Person name: {personName}");
                 // Handle Bahasa Alay
                 string alayPersonName = RegexHelper.GetAlayName(personName);
-                var biodata = Database.GetBiodataByName(alayPersonName);
+                var biodata = biodataDict[alayPersonName];
 
 
                 this.Invoke((Action)(() =>{
 
                     SearchTimeText.Text = $"Waktu Pencarian: {waktu} ms";
-                     // Jika similarity di bawah 80, tampilkan popup tidak ditemukan sidik jari yang cocok
+                     // Jika similarity di bawah 50, tampilkan popup tidak ditemukan sidik jari yang cocok
                     if (similarity < 50) {
                         MatchPercentageText.Text = $"Persentase Kecocokkan: Not Found";
                         SimilarImagePictureBox.Image = null;
