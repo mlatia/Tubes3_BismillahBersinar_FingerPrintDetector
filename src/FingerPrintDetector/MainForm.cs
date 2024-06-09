@@ -62,10 +62,16 @@ namespace FingerPrintDetector
 
         private async void SearchButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(imagePath)) {
+                MessageBox.Show("Please upload an image first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             SearchButton.Enabled = false;
             Console.WriteLine("Search button clicked");
 
             string inputFingerprint = ImageManager.ImagetoAscii("assets/input.BMP",1);
+            string allFingerprint = ImageManager.ImagetoAscii("assets/input.BMP",0);
             Console.WriteLine($"Input fingerprint: {inputFingerprint}");
 
             string inputFingerprint2 = ImageManager.ImagetoAscii("assets/input.BMP",0);
@@ -75,16 +81,14 @@ namespace FingerPrintDetector
 
             List<string> database = ImageManager.GetAllImagePaths("test/real");
 
-            Console.WriteLine("INI DATABASE");
-            Console.WriteLine(database.Count);
 
             await Task.Run(() =>
             {
              string selectedAlgorithm = AlgorithmComboBox.SelectedItem.ToString();
-                Tuple<string, int> result, result1, result2;
+                Tuple<string, float> result, result1, result2;
 
                 string mostSimilar;
-                int distance;
+                float distance;
 
                 var stopwatch = Stopwatch.StartNew();
                 if (selectedAlgorithm == "BM") {
@@ -96,8 +100,8 @@ namespace FingerPrintDetector
                     result2 = KMP.FindMostSimilarFingerprint(inputend, database);
                 }
 
-                int distance1 = result1.Item2;
-                int distance2 = result2.Item2;
+                float distance1 = result1.Item2;
+                float distance2 = result2.Item2;
                 if(distance1 < distance2){
                     distance = distance1;
                     mostSimilar = result1.Item1;
@@ -111,23 +115,15 @@ namespace FingerPrintDetector
 
             
                 Console.WriteLine($"Most similar fingerprint: {mostSimilar}, Distance: {distance}");
-                float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
+                float similarity = (1 - (float)distance) * 100;
                 Console.WriteLine($"similarity: {similarity}");
 
                 string personName = Database.GetPersonNameByImagePath(mostSimilar);
                 Console.WriteLine($"Person name: {personName}");
                 // Handle Bahasa Alay
-                string alayPersonName;
-                if (selectedAlgorithm == "BM") {
-                    alayPersonName = RegexHelper.GetAlayNameBM(personName);
-                }
-                else {
-                    alayPersonName = RegexHelper.GetAlayNameKMP(personName);
-                }
+                string alayPersonName = RegexHelper.GetAlayName(personName);
                 var biodata = Database.GetBiodataByName(alayPersonName);
 
-                // float similarity = (1 - (float)distance / inputFingerprint.Length) * 100;
-                // Console.WriteLine($"similarity: {similarity}");
 
                 this.Invoke((Action)(() =>{
 

@@ -70,30 +70,54 @@ namespace FingerPrintDetector
             return false;
         }
 
-        public static Tuple<string, int> FindMostSimilarFingerprint(string inputFingerprint, List<string> database) {
+        public static Tuple<string, float> FindMostSimilarFingerprint(string inputFingerprint, List<string> database) {
             string mostSimilarFingerprint = null;
-            int minDistance = int.MaxValue;
-            int distance;
-            foreach (string fingerprint in database) {
-                string dataFingerprint = ImageManager.ImagetoAscii(fingerprint,0);
+            float minDistance = float.MaxValue;
+            string input = ImageManager.ImagetoAscii("assets/input.BMP", 0);
+            float distance;
+
+            Parallel.ForEach(database, fingerprint => {
+                string dataFingerprint = ImageManager.ImagetoAscii(fingerprint, 0);
                 bool result = BmSearch(dataFingerprint, inputFingerprint);
 
-                if (result){
-                    minDistance = 0;
+                if (result) {
+                    if (input.Length < 3500) {
+                        minDistance = 0;
+                    } else {
+                        string subText = dataFingerprint.Substring(0, 2000);
+                        string subText2 = input.Substring(0, 2000);
+
+                        string subText3 = dataFingerprint.Substring(Math.Max(0, dataFingerprint.Length - 2000));
+                        string subText4 = input.Substring(Math.Max(0, input.Length - 2000));
+                        int distance1 = Similarity.CalculateHammingDistance(subText, subText2);
+                        int distance2 = Similarity.CalculateHammingDistance(subText3, subText4);
+                        if (distance1 >= distance2) {
+                            minDistance = (float)distance2 / 2000;
+                        } else {
+                            minDistance = (float)distance1 / 2000;
+                        }
+                    }
                     mostSimilarFingerprint = fingerprint;
-                    break;
-                } else{
-                    string subText = dataFingerprint.Substring(0, 30);
-                    distance = Similarity.CalculateHammingDistance(subText, inputFingerprint);
+                    return;
+                } else {
+                    string sub1, sub2;
+                    if (dataFingerprint.Length >= input.Length) {
+                        sub1 = dataFingerprint.Substring(0, input.Length);
+                        sub2 = input;
+                    } else {
+                        sub1 = input.Substring(0, dataFingerprint.Length);
+                        sub2 = dataFingerprint;
+                    }
+
+                    distance = (float)Similarity.CalculateHammingDistance(sub1, sub2) / sub1.Length;
                 }
 
-                if (distance < minDistance)
-                {
+                if (distance < minDistance) {
                     minDistance = distance;
                     mostSimilarFingerprint = fingerprint;
                 }
-            }
-            
+            });
+
             return Tuple.Create(mostSimilarFingerprint, minDistance);
         }
     }
