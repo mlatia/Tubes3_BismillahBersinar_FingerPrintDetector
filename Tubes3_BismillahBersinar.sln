@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{50B1DE2A-C7DA-4324-84CB-C1061F647562}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleWinFormsApp", "src\FingerPrintDetector\SimpleWinFormsApp.csproj", "{B123FE61-156F-4789-94F1-7D441329E482}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B123FE61-156F-4789-94F1-7D441329E482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B123FE61-156F-4789-94F1-7D441329E482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B123FE61-156F-4789-94F1-7D441329E482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B123FE61-156F-4789-94F1-7D441329E482}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B123FE61-156F-4789-94F1-7D441329E482} = {50B1DE2A-C7DA-4324-84CB-C1061F647562}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A52EB360-F9F8-4416-80DB-998CD18B384D}
+	EndGlobalSection
+EndGlobal
